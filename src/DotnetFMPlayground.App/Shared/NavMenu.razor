@@ -5,6 +5,12 @@
             <span class="navbar-toggler-icon"></span>
         </button>
     </div>
+    <div class="nav-itemn px-3">
+        <select class="region-picker" @onchange="ChangeRegion">
+            <option value="us-west-2" selected="selected">Virginia (us-east-1)</option>
+            <option value="us-west-2">Oregon (us-west-2)</option>
+        </select>
+    </div>
 </div>
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
@@ -50,5 +56,10 @@
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+
+    private void ChangeRegion(ChangeEventArgs e)
+    {
+        AmazonBedrockRuntimeClientExtension.Region = Amazon.RegionEndpoint.GetBySystemName(e.Value.ToString());
     }
 }

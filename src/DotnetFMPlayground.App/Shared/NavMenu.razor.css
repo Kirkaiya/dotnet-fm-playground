@@ -3,12 +3,19 @@
 }
 
 .top-row {
-    height: 3.5rem;
+    height: 4.2rem;
     background-color: rgba(0,0,0,0.4);
 }
 
 .navbar-brand {
     font-size: 1.1rem;
+}
+
+.region-picker {
+    width: 10rem;
+    font-size: 0.8rem;
+    background-color:indigo;
+    color:antiquewhite;
 }
 
 .oi {

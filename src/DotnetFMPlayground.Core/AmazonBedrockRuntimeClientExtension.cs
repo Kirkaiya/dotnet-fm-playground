@@ -7,11 +7,15 @@ using System.Text.Json;
 using System.Text;
 using DotnetFMPlayground.Core.Models.InferenceParameters;
 using DotnetFMPlayground.Core.Models.ModelResponse;
+using Amazon;
+using System.Runtime.CompilerServices;
 
 namespace DotnetFMPlayground.Core
 {
     public static class AmazonBedrockRuntimeClientExtension
     {
+        public static RegionEndpoint Region { get; set; } = RegionEndpoint.USEast1;
+
         public static async Task<IFoundationModelResponse?> InvokeModelAsync(this AmazonBedrockRuntimeClient client,
             string modelId,
             Prompt prompt,
@@ -19,6 +23,9 @@ namespace DotnetFMPlayground.Core
             CancellationToken cancellationToken = default
             )
         {
+            if (client.Config.RegionEndpoint != Region)
+                client = new AmazonBedrockRuntimeClient(new AmazonBedrockRuntimeConfig { RegionEndpoint = Region });
+
             var invokeModelResponse = await client.InvokeModelAsync(
                 InvokeModelRequestBuilder.Build(modelId, prompt, inferenceParameters),
                 cancellationToken
@@ -36,6 +43,9 @@ namespace DotnetFMPlayground.Core
             Func<string?, Task> exceptionReceived, 
             CancellationToken cancellationToken = default)
         {
+            if (client.Config.RegionEndpoint != Region)
+                client = new AmazonBedrockRuntimeClient(new AmazonBedrockRuntimeConfig { RegionEndpoint = Region });
+
             var response = await client.InvokeModelWithResponseStreamAsync(
                 InvokeModelRequestBuilder.BuildWithResponseStream(modelId, prompt, inferenceParameters),
                 cancellationToken

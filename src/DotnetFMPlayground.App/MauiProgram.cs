@@ -5,6 +5,7 @@ using Amazon.BedrockAgent;
 using Amazon.BedrockAgentRuntime;
 using Microsoft.Extensions.Logging;
 using MudBlazor.Services;
+using DotnetFMPlayground.Core;
 
 namespace DotnetFMPlayground.App
 {
@@ -30,14 +31,14 @@ namespace DotnetFMPlayground.App
             builder.Logging.AddDebug();
 #endif
             builder.Services.AddSingleton<AmazonBedrockRuntimeClient>(
-                new AmazonBedrockRuntimeClient(new AmazonBedrockRuntimeConfig()
+                new AmazonBedrockRuntimeClient(new AmazonBedrockRuntimeConfig
                 {
-                    RegionEndpoint = RegionEndpoint.USEast1
+                    RegionEndpoint = AmazonBedrockRuntimeClientExtension.Region
                 }));
             builder.Services.AddSingleton<AmazonBedrockClient>(
-                new AmazonBedrockClient(new AmazonBedrockConfig()
+                new AmazonBedrockClient(new AmazonBedrockConfig
                 {
-                    RegionEndpoint = RegionEndpoint.USEast1
+                    RegionEndpoint = AmazonBedrockRuntimeClientExtension.Region
                 }));
 
             builder.Services.AddSingleton<AmazonBedrockAgentRuntimeClient>(
